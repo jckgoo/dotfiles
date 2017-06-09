@@ -1,0 +1,44 @@
+# -*- outline-regexp: "^# \\*+ "; eval: (outline-minor-mode 1); -*-
+# * IDE/Editor files
+# ** Emacs
+*~
+\#*\#
+*.\#*
+*_flymake.*
+.projectile
+.dir-locals.el
+
+# ** Tags
+tags
+TAGS
+GTAGS
+GRTAGS
+GPATH
+GSYMS
+
+# ** Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+Session.vim
+
+# * OS-generated files
+# ** Linux
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ** MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ** Windows
+ehthumbs.db
+ethumbs_vista.db
+Thumbs.db
+Desktop.ini
+*.lnk

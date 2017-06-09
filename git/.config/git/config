@@ -1,0 +1,26 @@
+[user]
+	name = Justin Goo
+	email = jckgoo@gmail.com
+	signingKey = F7E7E55F
+[github]
+	user = jckgoo
+	token = 129fd322114d80c36061139d6c212b90
+[core]
+	autocrlf = input
+	safecrlf = true
+[diff]
+	tool = ediff
+	mnemonicprefix = true
+[difftool]
+	prompt = false
+[difftool "ediff"]
+	cmd = emacsclient -nw --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
+[merge]
+	tool = ediff
+	ff = false
+[mergetool]
+	prompt = false
+[mergetool "ediff"]
+	cmd = emacsclient -nw --eval \"(ediff-merge-with-ancestor \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" nil \\\"$MERGED\\\")\"
+[pull]
+	rebase = preserve
