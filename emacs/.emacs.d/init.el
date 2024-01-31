@@ -1,6 +1,7 @@
-;; -*- outline-regexp: "^;; \\*+ "; eval: (outline-minor-mode 1); -*-
-;; * Initialization
-(setq gc-cons-threshold 16777216)
+;; init.el -*- lexical-binding: t outline-regexp: "^;; \\*+ "; eval: (outline-minor-mode 1); -*-
+; * Initialization
+(unless (featurep 'early-init)
+  (load (expand-file-name "early-init" user-emacs-directory) t))
 
 (setq user-full-name "Justin Goo"
       user-mail-address "jckgoo@gmail.com")
@@ -11,13 +12,6 @@
 (setq ad-redefinition-action 'accept)
 
 ;; * GUI Setup
-;; Set these early to avoid momentary display
-(setq inhibit-startup-screen t)
-(tooltip-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode 1)
-(scroll-bar-mode -1)
-
 (when (member "DejaVu Sans Mono" (font-family-list))
   (set-face-attribute 'default nil
 		      :family "DejaVu Sans Mono"
@@ -25,7 +19,6 @@
 
 ;; * Package Management
 (require 'package)
-(setq package-enable-at-startup nil)
 (add-to-list 'package-archives
 	     '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
