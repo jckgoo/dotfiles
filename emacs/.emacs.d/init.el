@@ -20,7 +20,7 @@
 ;; * Package Management
 (require 'package)
 (add-to-list 'package-archives
-	     '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+	     '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 ;; Bootstrap `use-package'
@@ -29,9 +29,9 @@
   (package-install 'use-package))
 
 (eval-when-compile
+  (require 'bind-key)
   (require 'use-package)
   (setq use-package-always-ensure t))
-(require 'bind-key)
 (require 'diminish)
 
 ;; * OS-specific configuration
