@@ -216,6 +216,12 @@
   :init
   (push #'yas-hippie-try-expand hippie-expand-try-functions-list))
 
+(use-package yasnippet-snippets)
+
+;; * LSP
+(use-package eglot
+  :commands eglot)
+
 ;; * Filetypes
 ;; ** C/C++
 (add-hook 'c-mode-common-hook #'subword-mode)
