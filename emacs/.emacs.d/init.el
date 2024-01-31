@@ -11,11 +11,6 @@
 
 (setq ad-redefinition-action 'accept)
 
-;; * GUI Setup
-(when (member "DejaVu Sans Mono" (font-family-list))
-  (set-face-attribute 'default nil
-		      :family "DejaVu Sans Mono"
-		      :height 140))
 
 ;; * Package Management
 (require 'package)
@@ -43,6 +38,37 @@
 
 ;; * Themes/UI
 (fset 'yes-or-no-p 'y-or-n-p)
+
+(when (member "Fira Code" (font-family-list))
+  (set-frame-font "Fira Code-11" nil t))
+
+(use-package ligature
+  :init
+  (ligature-set-ligatures 't '("www" "Fl" "Tl" "ff" "ffi" "fi" "fj" "fl" "ft"))
+  (ligature-set-ligatures 'prog-mode
+                          '("{|"  "[|"  "]#"  "(*"  "}#"  "$>"  "^="
+                            ("=" (rx (+ (or ">" "<" "|" "/" "~" ":" "!" "="))))
+                            (";" (rx (+ ";")))
+                            ("&" (rx (+ "&")))
+                            ("!" (rx (+ (or "=" "!" "\." ":" "~"))))
+                            ("?" (rx (or ":" "=" "\." (+ "?"))))
+                            ("%" (rx (+ "%")))
+                            ("|" (rx (+ (or ">" "<" "|" "/" ":" "!" "}" "\]" "-" "=" ))))
+                            ("\\" (rx (or "/" (+ "\\"))))
+                            ("+" (rx (or ">" (+ "+"))))
+                            (":" (rx (or ">" "<" "=" "//" ":=" (+ ":"))))
+                            ("/" (rx (+ (or ">"  "<" "|" "/" "\\" "\*" ":" "!" "="))))
+                            ("\." (rx (or "=" "-" "\?" "\.=" "\.<" (+ "\."))))
+                            ("-" (rx (+ (or ">" "<" "|" "~" "-"))))
+                            ("*" (rx (or ">" "/" ")" (+ "*"))))
+                            ("w" (rx (+ "w")))
+                            ("<" (rx (+ (or "\+" "\*" "\$" "<" ">" ":" "~"  "!" "-"  "/" "|" "="))))
+                            (">" (rx (+ (or ">" "<" "|" "/" ":" "=" "-"))))
+                            ("#" (rx (or ":" "=" "!" "(" "\?" "\[" "{" "_(" "_" (+ "#"))))
+                            ("~" (rx (or ">" "=" "-" "@" "~>" (+ "~"))))
+                            ("_" (rx (+ (or "_" "|"))))
+                            ("0" (rx (and "x" (+ (in "A-F" "a-f" "0-9")))))))
+  (global-ligature-mode t))
 
 (use-package solarized-theme
   :config
