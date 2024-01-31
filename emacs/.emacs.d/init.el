@@ -77,23 +77,81 @@
     (setq solarized-distinct-fringe-background t)
     (load-theme 'solarized-light t)))
 
-(use-package counsel
-  :demand t
-  :diminish 'ivy-mode
-  :bind (("C-r" . ivy-resume)
-	 ("C-s" . swiper)
-	 ("M-x" . counsel-M-x)
-	 ("C-x C-f" . counsel-find-file)
-	 ("C-h f" . counsel-describe-function)
-	 ("C-h v" . counsel-describe-variable)
-	 ("C-h o" . counsel-info-lookup-symbol)
-	 ("C-x 8 RET" . counsel-unicode-char))
-  :config
-  (progn
-    (setq ivy-use-virtual-buffers t)
-    (setq enable-recursive-minibuffers t)
-    (setq ivy-count-format "(%d/%d)")
-    (ivy-mode 1)))
+;; ** Minibuffer
+(setq enable-recursive-minibuffers t)
+
+(use-package vertico
+  :init
+  (vertico-mode 1))
+
+(setq read-file-name-completion-ignore-case t
+      read-buffer-completion-ignore-case t)
+
+(use-package vertico-directory
+  :ensure nil
+  :after vertico
+  :bind (:map vertico-map
+	      ("RET" . vertico-directory-enter)
+	      ("DEL" . vertico-directory-delete-char)
+	      ("M-DEL" . vertico-directory-delete-word))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+(use-package marginalia
+  :bind (:map minibuffer-local-map
+	      ("M-A" . marginalia-cycle))
+  :init
+  (marginalia-mode 1))
+
+(use-package consult
+  :bind (;; C-c bindings
+	 ("C-c M-x" . consult-mode-command)
+	 ("C-c h" . consult-history)
+	 ("C-c k" . consult-kmacro)
+	 ("C-c m" . consult-man)
+	 ;; C-x bindings
+	 ("C-x M-:" . consult-complex-command)
+	 ("C-x b" . consult-buffer)
+	 ("C-x 4 b" . consult-buffer-other-window)
+	 ("C-x 5 b" . consult-buffer-other-frame)
+	 ("C-x r b" . consult-bookmark)
+	 ("C-x p b" . consult-project-buffer)
+	 ;; Other bindings
+	 ("M-y" . consult-yank-pop)
+	 ;; M-g bindings (goto-map)
+	 ("M-g e" . consult-compile-error)
+	 ("M-g f" . consult-flymake)
+	 ("M-g g" . consult-goto-line)
+	 ("M-g M-g" . consult-goto-line)
+	 ("M-g o" . consult-outline)
+	 ("M-g m" . consult-mark)
+	 ("M-g k" . consult-global-mark)
+	 ("M-g i" . consult-imenu)
+	 ("M-g I" . consult-imenu-multi)
+	 ;; M-s bindings (search-map)
+	 ("M-s d" . consult-find)
+	 ("M-s D" . consult-locate)
+	 ("M-s e" . consult-isearch-history)
+	 ("M-s g" . consult-grep)
+	 ("M-s G" . consult-git-grep)
+	 ("M-s l" . consult-line)
+	 ("M-s L" . consult-line-multi)
+	 ("M-s k" . consult-keep-lines)
+	 ("M-s u" . consult-focus-lines)
+	 :map isearch-mode-map
+	 ("M-e" . consult-isearch-history)
+	 ("M-s e" . consult-isearch-history)
+	 ("M-s l" . consult-line)
+	 ("M-s L" . consult-line-multi)
+	 :map minibuffer-local-map
+	 ("M-s" . consult-history)
+	 ("M-r" . consult-history))
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+  :init
+  (setq register-preview-delay 0.5
+	register-preview-function #'consult-register-format)
+  (advice-add #'register-preview :override #'consult-register-window)
+  (setq xref-show-xrefs-function #'consult-xref
+	xref-show-definitions-function #'consult-xref))
 
 ;; * Files/Buffers
 (setq make-backup-files nil)
@@ -115,8 +173,7 @@
 (use-package magit
   :bind (("C-x g" . magit-status))
   :config
-  (setq magit-completing-read-function #'ivy-completing-read
-	magit-revision-show-gravatars nil))
+  (setq magit-revision-show-gravatars nil))
 
 ;; * Editing/Navigation
 (setq-default truncate-lines t)
