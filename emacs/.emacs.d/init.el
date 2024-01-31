@@ -145,14 +145,13 @@
     (smartparens-global-strict-mode 1)
     (show-smartparens-global-mode 1)))
 
-(use-package company
-  :demand t
-  :diminish 'company-mode
-  :bind (("M-/" . company-yasnippet))
-  :config
-  (progn
-    (setq-default tab-always-indent 'complete)
-    (global-company-mode 1)))
+;; ** Completion
+(global-set-key [remap dabbrev-expand] #'hippie-expand)
+
+(use-package corfu
+  :init
+  (setq corfu-auto t)
+  (global-corfu-mode 1))
 
 (use-package yasnippet
   :diminish 'yas-minor-mode
