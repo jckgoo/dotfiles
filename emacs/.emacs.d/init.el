@@ -136,11 +136,6 @@
   :diminish 'subword-mode
   :commands subword-mode)
 
-(use-package undo-tree
-  :diminish 'undo-tree-mode
-  :config
-  (global-undo-tree-mode 1))
-
 (use-package smartparens
   :diminish 'smartparens-mode
   :config
@@ -211,6 +206,9 @@
 
 (bind-key "C-M-s" #'isearch-forward)
 (bind-key "C-M-r" #'isearch-backward)
+
+(bind-key "C-/" #'undo-only)
+(bind-key "C-?" #'undo-redo)
 
 (bind-key "C-w" #'kill-lines-or-region)
 (bind-key "M-w" #'copy-lines-or-region)
