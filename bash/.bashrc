@@ -18,7 +18,7 @@ MAGENTA="\[$(tput setaf 5)\]"
 CYAN="\[$(tput setaf 6)\]"
 NORMAL="\[$(tput sgr0)\]"
 
-export PS1="\n${BLUE}\u${CYAN}@${BLUE}\H${CYAN}:${GREEN}\w\n${MAGENTA}\$ ${NORMAL}"
+export PS1="\n${BLUE}\u${CYAN}@${BLUE}\H${CYAN}:${GREEN}\w\n${MAGENTA}\\\$ ${NORMAL}"
 export PS2="${MAGENTA}> ${NORMAL}"
 
 # Aliases
