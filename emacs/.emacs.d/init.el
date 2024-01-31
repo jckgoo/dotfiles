@@ -247,6 +247,13 @@
 	  haskell-process-auto-import-loaded-modules t
 	  haskell-process-log t)))
 
+;; ** LaTeX
+(use-package tex-site
+  :ensure auctex
+  :mode ("\\.tex\\'" . latex-mode)
+  :hook
+  (TeX-mode . turn-off-auto-fill))
+
 ;; ** Text/Markdown
 (use-package markdown-mode
   :mode (("\\.md\\'" . markdown-mode)
