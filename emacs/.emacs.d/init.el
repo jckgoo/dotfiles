@@ -27,7 +27,9 @@
   (require 'bind-key)
   (require 'use-package)
   (setq use-package-always-ensure t))
-(require 'diminish)
+
+(use-package delight
+  :demand t)
 
 ;; * OS-specific configuration
 (when (eq system-type 'darwin)
@@ -190,17 +192,16 @@
 
 (use-package subword
   :ensure nil
-  :diminish 'subword-mode
+  :delight subword-mode
   :commands subword-mode)
 
 (use-package smartparens
-  :diminish 'smartparens-mode
-  :config
-  (progn
-    (require 'smartparens-config)
-    (sp-use-smartparens-bindings)
-    (smartparens-global-strict-mode 1)
-    (show-smartparens-global-mode 1)))
+  :delight smartparens-mode
+  :init
+  (require 'smartparens-config)
+  (sp-use-smartparens-bindings)
+  (smartparens-global-strict-mode 1)
+  (show-smartparens-global-mode 1))
 
 ;; ** Completion
 (global-set-key [remap dabbrev-expand] #'hippie-expand)
@@ -211,9 +212,9 @@
   (global-corfu-mode 1))
 
 (use-package yasnippet
-  :diminish 'yas-minor-mode
-  :config
-  (yas-global-mode 1))
+  :delight yas-minor-mode
+  :init
+  (push #'yas-hippie-try-expand hippie-expand-try-functions-list))
 
 ;; * Filetypes
 ;; ** C/C++
