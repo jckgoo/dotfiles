@@ -6,11 +6,11 @@
 (setq user-full-name "Justin Goo"
       user-mail-address "jckgoo@gmail.com")
 
-(setq custom-file (concat user-emacs-directory "/custom.el"))
-(load custom-file 'noerror)
-
 (setq ad-redefinition-action 'accept)
 
+;; * Customization
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file t nil t)
 
 ;; * Package Management
 (require 'package)
@@ -39,7 +39,7 @@
   (setq locate-command "mdfind"))
 
 ;; * Themes/UI
-(fset 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
 
 (when (member "Fira Code" (font-family-list))
   (set-frame-font "Fira Code-11" nil t))
@@ -73,11 +73,10 @@
   (global-ligature-mode t))
 
 (use-package solarized-theme
-  :config
-  (progn
-    (setq x-underline-at-descent-line t)
-    (setq solarized-distinct-fringe-background t)
-    (load-theme 'solarized-light t)))
+  :init
+  (setq x-underline-at-descent-line t)
+  (setq solarized-distinct-fringe-background t)
+  (load-theme 'solarized-light t))
 
 ;; ** Minibuffer
 (setq enable-recursive-minibuffers t)
@@ -156,7 +155,8 @@
 	xref-show-definitions-function #'consult-xref))
 
 ;; * Files/Buffers
-(setq make-backup-files nil)
+(setq backup-by-copying t
+      make-backup-files nil)
 (setq auto-save-default nil)
 
 (global-auto-revert-mode 1)
@@ -235,23 +235,23 @@
 ;; ** CSV
 (use-package csv-mode
   :mode ("\\.csv\\'" "\\.2da\\'")
+  :hook turn-off-auto-fill
   :config
-  (progn
-    (add-hook 'csv-mode-hook #'turn-off-auto-fill)
-    (setq csv-separators (list "," ";" "\t"))))
+  (setq csv-separators (list "," ";" "\t")))
 
 ;; ** Haskell
 (use-package haskell-mode
   :mode (("\\.hs\\(c\\|-boot\\)?\\'" . haskell-mode)
 	 ("\\.lhs\\'" . literate-haskell-mode)
 	 ("\\.cabal\\'" . haskell-cabal-mode))
+  :hook
+  (haskell-mode . subword-mode)
   :config
-  (progn
-    (add-hook 'haskell-mode-hook #'subword-mode)
-    (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
-    (setq haskell-process-suggest-remove-import-lines t
-	  haskell-process-auto-import-loaded-modules t
-	  haskell-process-log t)))
+  (setq haskell-indentation-layout-offset 4
+	haskell-indentation-starter-offset 4
+	haskell-indentation-left-offset 4
+	haskell-indentation-where-pre-offset 2
+	haskell-indentation-where-post-offset 2))
 
 ;; ** LaTeX
 (use-package tex-site
@@ -261,13 +261,15 @@
   (TeX-mode . turn-off-auto-fill))
 
 ;; ** Text/Markdown
+(setq sentence-end-double-space nil)
+
 (use-package markdown-mode
   :mode (("\\.md\\'" . markdown-mode)
 	 ("\\.markdown\\'" . markdown-mode)
 	 ("\\.txt\\'" . markdown-mode)
 	 ("\\.text\\'" . markdown-mode))
-  :config
-  (add-hook 'gfm-mode-hook #'turn-off-auto-fill))
+  :hook
+  (gfm-mode . turn-off-auto-fill))
 
 ;; * Keybindings
 (use-package misc
